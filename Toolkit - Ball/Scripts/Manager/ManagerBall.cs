@@ -62,6 +62,11 @@ namespace Ball{
                     perdido.Invoke();
                 }
             }
+            if (status == GameStatus.JUGANDO && puntuacion >= puntuacionTarget) {
+                status = GameStatus.GANADO;
+                ganado.Invoke();
+            }
+
             UpdateTiempoUI();            
         }
 
@@ -129,6 +134,12 @@ namespace Ball{
         public void AccionReiniciarNivel()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        public void AccionActivarCursor(bool enable) {
+            if (enable)
+                Cursor.lockState = CursorLockMode.None;
+            else
+                Cursor.lockState = CursorLockMode.Locked;
         }
 
         public bool IsJugando() {

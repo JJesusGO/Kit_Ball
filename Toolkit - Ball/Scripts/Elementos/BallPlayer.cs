@@ -9,11 +9,11 @@ namespace Ball {
     public class BallPlayer : MonoBehaviour {
 
         [SerializeField]
-        private float fuerzaEmpuje = 200.0f;
+        private float fuerzaMovimiento = 200.0f;
         [SerializeField]
         private Vector2 fuerzaDireccion = Vector2.one;
         [SerializeField]
-        private bool enableMovilidad = true;
+        private float velocidadMaxima = 10.0f;
 
         private static BallPlayer instancia = null;
         private ManagerAplicacion manager;
@@ -31,7 +31,14 @@ namespace Ball {
         }
 
         public void Update() {
-            if (!enableMovilidad) rb.velocity = Vector3.zero;
+            UpdateVelocidadMaxima();
+        }
+
+        private void UpdateVelocidadMaxima() {
+
+            if (rb.velocity.magnitude > velocidadMaxima) { 
+                rb.velocity = rb.velocity.normalized * velocidadMaxima;
+            }
         }
 
         public void AddFuerza(Vector3 fuerza)
@@ -40,7 +47,7 @@ namespace Ball {
         }
         public void AddFuerzaEmpuje(Vector3 fuerza, float multiplicador)
         {
-            AddFuerza(fuerzaEmpuje * fuerza * multiplicador);
+            AddFuerza(fuerzaMovimiento * fuerza * multiplicador);
         }
         public void AddFuerzaEmpuje(Vector3 fuerza)
         {
